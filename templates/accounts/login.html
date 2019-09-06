@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>登录</title>
+<style type="text/css">
+body {
+	background-image: url(/static/sucai/login_face.jpg);
+	background-size: cover;
+}
+#apDiv1 {
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	z-index: 1;
+	left: 750px;
+	top: 350px;
+	height: 23px;
+}
+#apDiv2 {
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	z-index: 2;
+	left: 750px;
+	top: 250px;
+}
+#apDiv3 {
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	z-index: 3;
+	left: 1141px;
+	top: 257px;
+}
+#apDiv4 {
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	z-index: 4;
+	left: 280px;
+	top: 189px;
+}
+#apDiv5 {
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	z-index: 4;
+}
+#apDiv6 {
+	position: absolute;
+	width: 200px;
+	height: 115px;
+	z-index: 4;
+	left: 300px;
+	top: 260px;
+}
+</style>
+<script type="text/javascript">
+function MM_swapImgRestore() { //v3.0
+  var i,x,a=document.MM_sr; for(i=0;a&&i<a.length&&(x=a[i])&&x.oSrc;i++) x.src=x.oSrc;
+}
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+
+function MM_findObj(n, d) { //v4.01
+  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
+    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
+  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
+  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
+  if(!x && d.getElementById) x=d.getElementById(n); return x;
+}
+
+function MM_swapImage() { //v3.0
+  var i,j=0,x,a=MM_swapImage.arguments; document.MM_sr=new Array; for(i=0;i<(a.length-2);i+=3)
+   if ((x=MM_findObj(a[i]))!=null){document.MM_sr[j++]=x; if(!x.oSrc) x.oSrc=x.src; x.src=a[i+2];}
+}
+</script>
+</head>
+
+<form id="form1"  method="post" action="/accounts/login/">
+    {% csrf_token %}
+<div id="apDiv2">
+    <input type="text" placeholder="学号" name="student_id"  id="student_id" style="width:300px;height:30px;text-indent:8px;font-size:20px;"/><span id="user_infor"></span>
+</div>
+<div id="apDiv1">
+    <input type="password" name="student_pwd" id="password" onblur="valipassword()" placeholder="密码" style="width:300px;height:30px;text-indent:8px;font-size:20px;" size="16"/><span id="pwd_infor"></span>
+</div>
+
+<body onload="MM_preloadImages('/static/sucai/login_button1.png','/static/sucai/not_yet.png')">
+<div id="apDiv3"><button type="submit"  onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('login_button','','/static/sucai/login_button1.png',1)"><img src="/static/sucai/login_button0.png" width="182" height="129" id="login_button" /></button></div>
+<div id="apDiv6"><a href="/accounts/register" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image2','','/static/sucai/not_yet.png',1)"><img src="/static/sucai/welcome_back.png" name="Image2" width="306" height="129" id="Image2" /></a></div>
+</form>
+<script>
+    document.getElementById("student_id").onfocus = function () {
+            user_info = document.getElementById("user_infor").innerHTML = "学号长度为12位(〃'▽'〃)<br/>";
+            {#user_info.style.color = "blue";#}
+        };
+        document.getElementById("student_id").onblur = function () {
+            user_span = document.getElementById("user_infor");
+            if (this.value.length == 0) {
+                user_span.innerHTML = "学号为必填项(ー`´ー)";
+                user_span.style.color = "red";
+                user_span.style.fontSize = "3";
+                return false;
+            } else if (this.value.length != 12) {
+                user_span.innerText = "学号长度不对ヽ(#`Д´)ﾉ ";
+                user_span.style.color = "red";
+                user_span.style.fontSize = "3";
+                return false;
+            } else if (/[\d]{12}/i.test(this.value)) {
+                user_span.innerHTML = "❤";
+                user_span.style.color = "pink";
+                user_span.style.fontSize = "3";
+                return true;
+            }
+        }
+        function valipassword() {
+            var pwd = document.getElementById("password");
+            var pwd_span = document.getElementById("pwd_infor");
+            if (pwd.value.length >= 6) {
+                pwd_span.innerHTML = '❤';
+                pwd_span.style.color = "pink";
+                return true;
+            } else {
+                pwd_span.innerHTML = "密码长度需大于6位(・ω<)";
+                pwd_span.style.color = 'red';
+                return false;
+            }
+        }
+</script>
+
+</body>
+</html>
