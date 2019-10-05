@@ -20,9 +20,9 @@ from freetime import settings
 
 urlpatterns = [
     url(r'', include('freeapp.urls', namespace="freeapp")),
-    url(r'^freeapp/', include('freeapp.urls',namespace='freeapp')),
+    url(r'^freeapp/', include('freeapp.urls', namespace='freeapp')),
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('accounts.urls',namespace='accounts')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^apis/', include('apis.urls', namespace='apis')),
 
 

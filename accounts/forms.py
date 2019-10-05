@@ -34,25 +34,25 @@ class LoginForm(forms.ModelForm):
 
 # 用户注册
 class RegisterForm(forms.Form):
-    username = forms.CharField(label="用户名", max_length="24",widget=widgets.TextInput(attrs={"class":"form-control", "placeholder": "请输入用户名"}))
-    mobile = forms.CharField(label="手机号", max_length="24",widget=widgets.TextInput(attrs={"class":"form-control", "placeholder": "请输入手机号"}))
+    student_id = forms.CharField(label="学号", max_length="12",widget=widgets.TextInput(attrs={"class":"form-control", "placeholder": "请输入学号"}))
+    qq = forms.CharField(label="QQ号", max_length="24",widget=widgets.TextInput(attrs={"class":"form-control", "placeholder": "请输入QQ号"}))
     password = forms.CharField(label="密 码", widget=widgets.PasswordInput(attrs={"class":"form-control", "placeholder": "请输入密码"}))
     password2 = forms.CharField(label="密 码2", widget=widgets.PasswordInput(attrs={"class":"form-control", "placeholder": "请再输入密码"}))
-    mobile_captcha = forms.CharField(label="验证码", widget=widgets.TextInput(attrs={"style":"width: 160px;padding: 10px", "placeholder":"验证码", "error_messages": {"invalid": "验证码错误"}}))
+    # mobile_captcha = forms.CharField(label="验证码", widget=widgets.TextInput(attrs={"style":"width: 160px;padding: 10px", "placeholder":"验证码", "error_messages": {"invalid": "验证码错误"}}))
 
-    def clean_username(self):
-        ret = User.objects.filter(username=self.cleaned_data.get("username"))
+    def clean_student_id(self):
+        ret = User.objects.filter(student_id=self.cleaned_data.get("student_id"))
         if not ret:
-            return self.cleaned_data.get("username")
+            return self.cleaned_data.get("student_id")
         else:
-            raise ValidationError("用户名已注册")
+            raise ValidationError("学号已注册")
 
-    def clean_mobile(self):
-        ret = User.objects.filter(mobile=self.cleaned_data.get("mobile"))
+    def clean_qq(self):
+        ret = User.objects.filter(qq=self.cleaned_data.get("qq"))
         if not ret:
-            return self.cleaned_data.get("mobile")
+            return self.cleaned_data.get("qq")
         else:
-            raise ValidationError("手机号已绑定")
+            raise ValidationError("QQ号已绑定")
 
     def clean_password(self):
         data = self.cleaned_data.get("password")

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.http import JsonResponse
 from django.contrib import auth
 from django.contrib.auth.hashers import make_password
@@ -11,14 +11,20 @@ logger = logging.getLogger('account')
 # Create your views here.
 
 class Login(View):
-    def post(self,request):
+    def post(self, request):
         student_id = request.POST.get('student_id')
         student_pwd = request.POST.get('student_pwd')
         user = auth.authenticate(username=student_id, password=student_pwd)
-        print(111111111111)
-        print(student_id,student_pwd)
-        print(user)
-        return render(request,'accounts/login.html')
+        if user is not None and user.is_active:
+            auth.login(request, student_id)
+            logger.debug("用户{}登录成功".format(user))
+            # print(111111111111)
+            # print(student_id,student_pwd)
+            # print(user)
+            return render(request, 'freeapp/index.html')
+        else:
+            logger.error("用户{}登录失败".format(user))
+
     def get(self,request):
         print(request)
         return render(request, 'accounts/login.html')
